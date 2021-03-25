@@ -25,8 +25,8 @@ public class EmployeeServiceImp implements EmployeeService{
 
 	@Override
 	public EmployeeDetails findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return employeeRepository.findById(id).orElse(null);
 	}
 
 	@Override
@@ -36,14 +36,20 @@ public class EmployeeServiceImp implements EmployeeService{
 	}
 
 	@Override
-	public void delete(EmployeeDetails object) {
-		// TODO Auto-generated method stub
+	public EmployeeDetails findByName(String name) {
+		return employeeRepository.findByName(name)  ;
+	}
+
+
+	@Override
+	public void delete() {
+		employeeRepository.deleteAll();
 		
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		// TODO Auto-generated method stub
+		employeeRepository.deleteById(id);
 		
 	}
 
