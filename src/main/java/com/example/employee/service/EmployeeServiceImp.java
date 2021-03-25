@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import org.springframework.stereotype.Service;
 import com.example.employee.model.EmployeeDetails;
-import repository.EmployeeRepository;
+import com.example.employee.repository.EmployeeRepository;
 
 @Service
 public class EmployeeServiceImp implements EmployeeService{

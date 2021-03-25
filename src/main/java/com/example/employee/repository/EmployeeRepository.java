@@ -1,4 +1,4 @@
-package repository;
+package com.example.employee.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
