@@ -3,6 +3,8 @@ package com.example.employee.service;
 import com.example.employee.model.EmployeeDetails;
 
 public interface EmployeeService extends CrudService<EmployeeDetails,Long> {
+
+    EmployeeDetails findByName (String name);
 	
-	//EmployeeDetails addDetails(EmployeeDetails empdetails);
+
 }
