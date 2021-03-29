@@ -10,7 +10,11 @@ public interface CrudService<T, ID> {
 	// Object can be anything
 	T save(T object);
 	
-	void delete(T object);
+	void deleteAll();
 	void deleteById(ID id);
+
+	String retrieveMessage();
+
+
 
 }

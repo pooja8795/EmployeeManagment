@@ -2,6 +2,9 @@ package com.example.employee.service;
 
 import java.util.HashSet;
 import java.util.Set;
+
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.example.employee.model.EmployeeDetails;
 import com.example.employee.repository.EmployeeRepository;
@@ -25,8 +28,8 @@ public class EmployeeServiceImp implements EmployeeService{
 
 	@Override
 	public EmployeeDetails findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return employeeRepository.findById(id).orElse(null);
 	}
 
 	@Override
@@ -36,15 +39,24 @@ public class EmployeeServiceImp implements EmployeeService{
 	}
 
 	@Override
-	public void delete(EmployeeDetails object) {
-		// TODO Auto-generated method stub
-		
+	public void deleteAll() {
+		employeeRepository.deleteAll();
 	}
+
 
 	@Override
 	public void deleteById(Long id) {
-		// TODO Auto-generated method stub
+		employeeRepository.deleteById(id);
 		
+	}
+
+
+	@Value("${Welcome}")
+	private String welcomeMessage;
+
+	public String retrieveMessage()
+	{
+		return welcomeMessage;
 	}
 
 }

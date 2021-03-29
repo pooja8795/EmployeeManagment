@@ -1,60 +1,85 @@
 package com.example.employee.controller;
 
+import com.example.employee.Configuration.BasicConfiguration;
 import com.example.employee.model.EmployeeDetails;
 import com.example.employee.service.EmployeeService;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 
 @RestController
 public class EmployeeController {
-	
-	
+
 	private final EmployeeService empservice;
-	
-	
+
 	public EmployeeController(EmployeeService empservice) {
-		
+
 		this.empservice = empservice;
 	}
+	@Autowired
+	private Environment env;
 
+	@Autowired
+	BasicConfiguration configuration;
 
-	@PostMapping("/employee/new")
-	public String saveDetails( @RequestBody EmployeeDetails empdetails)
+	@RequestMapping("/welcome")
+	public String getwelcomeString()
 	{
-		EmployeeDetails savedemp= empservice.save(empdetails);
-		
-		return "New Row Added "+savedemp.getEmp_id();
+		return empservice.retrieveMessage();
+
 	}
-	
+	@PostMapping("/employee/new")
+	public String saveDetails(@RequestBody EmployeeDetails empdetails) {
+		EmployeeDetails savedemp = empservice.save(empdetails);
 
-//	public List<EmployeeDetails> getDetails()
-//	{
-//		List<EmployeeDetails> empdetails = empserviceimp;
-//		System.out.println("Controller Called");
-//		return empdetails;
-//	}
-	
-//	@GetMapping("/employee/{id}")
-//	public Optional<Stream<EmployeeDetails>> getEmployeeId(@PathVariable ("id") int emp_id )
-//	{
-//		
-//		Optional<Stream<EmployeeDetails>> matchingObject = Optional.of(empservice.ed().stream().
-//			    filter(p -> p.getEmp_id()==(emp_id)));
-//			   
-//		return matchingObject;
-//	}
+		return "New Row Added " + savedemp.getEmp_id();
+	}
 
-	
-//	@RequestMapping("/myname/{id}/{Enter}")
-//	//public String getEmpid(@PathVariable String id)
-//    //public String getEmpid(@PathVariable ("id") String name)
-//	//Variables declared as path variable are required by default and hence here http://localhost:8080/myname will not provide any output
-//	public String getEmpid(@PathVariable (value="id") String name,@PathVariable (value="Enter") String name1)
-//	{
-//		return name+" " +name1;
-//	}
+	@GetMapping("/employees")
+	public @ResponseBody
+	Set<EmployeeDetails> getDetails() {
+		return empservice.findAll();
+	}
+
+	@GetMapping("/employees/{id}")
+	@ResponseBody
+	public EmployeeDetails getDetailsByID(@PathVariable("id") Long emp_id) {
+		return empservice.findById(emp_id);
+	}
+
+	@DeleteMapping("/deleteAll")
+	public void deleteAll() {
+		empservice.deleteAll();
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public void deleteByID(@PathVariable("id") Long emp_id) {
+		empservice.deleteById(emp_id);
+	}
+
+	@GetMapping("/Environment/Configuration")
+	public String method()
+	{
+		String path=env.getProperty("NewEmployee");
+		return path;
+	}
+
+	@RequestMapping("/Configuration Class")
+	public StringBuilder getBasicDetails() {
+		ArrayList<Object> list = new ArrayList<>();
+		list.add(configuration.getMsg());
+		list.add(configuration.getNo());
+		list.add(configuration.getApp_name());
+		StringBuilder sb=new StringBuilder();
+
+		for (Object obj : list) {
+			sb.append(obj);
+			sb.append("\t");
+		}
+		return sb;
+	}
 }
-
