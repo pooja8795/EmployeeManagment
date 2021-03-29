@@ -50,7 +50,6 @@ public class EmployeeServiceImp implements EmployeeService{
 		
 	}
 
-
 	@Value("${Welcome}")
 	private String welcomeMessage;
 
